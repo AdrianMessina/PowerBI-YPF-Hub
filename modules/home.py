@@ -103,19 +103,51 @@ def render(logger):
         available=True,
     )
 
+    _render_module_card(
+        "📄 Documentation Generator",
+        "Generación automática de documentación técnica-funcional en Word.",
+        ["Template corporativo YPF", "Diagrama ER automático",
+         "Campos autocompletados desde PBIP"],
+        available=True,
+    )
+
+    _render_module_card(
+        "🎨 Layout Organizer",
+        "Organización automática del diagrama del modelo (star/grid layouts).",
+        ["Star y Grid layouts", "Detección de snowflake dimensions",
+         "Creación de tabs focalizados"],
+        available=True,
+    )
+
+    _render_module_card(
+        "🛠️ Tools",
+        "Herramientas avanzadas de análisis y gestión del modelo.",
+        ["Delta Analyzer (snapshots)", "Aggregation Suggester",
+         "Perspectives + Translations"],
+        available=True,
+    )
+
+    _render_module_card(
+        "💾 Memory Estimator",
+        "Proyección del tamaño del modelo VertiPaq en memoria.",
+        ["Estimación por tabla/columna", "Impacto de tipos de datos",
+         "Recomendaciones de compresión"],
+        available=True,
+    )
+
+    _render_module_card(
+        "📊 Usage Dashboard",
+        "Métricas de uso de la suite (eventos, usuarios, apps más usadas).",
+        ["Tracking de eventos por usuario", "Métricas de uso por módulo",
+         "Análisis temporal"],
+        available=True,
+    )
+
     st.markdown("---")
-    st.markdown("### 📅 Módulos próximos")
-
-    coming = [
-        ("📄 Documentation Generator", "Doc .docx técnico-funcional automática"),
-        ("🎨 Layout Organizer", "Reorganización del diagrama del modelo"),
-        ("🛠️ Tools", "Delta Analyzer, Aggregation Suggester, Perspectives, Translations"),
-        ("💾 Memory Estimator", "Proyección de tamaño VertiPaq"),
-        ("📊 Usage Dashboard", "Métricas de uso de la suite (admin)"),
-    ]
-
-    for name, desc in coming:
-        st.caption(f"**{name}** — {desc}")
+    st.caption(
+        "**🎉 Suite completa** — 11 módulos disponibles. "
+        "Todos los módulos comparten el proyecto cargado en el sidebar."
+    )
 
 
 def _render_module_card(title, description, features, available=True):

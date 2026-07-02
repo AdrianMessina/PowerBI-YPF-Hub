@@ -62,50 +62,11 @@ def _render_sidebar():
             with c2:
                 st.image(str(logo_ypf_path), width=80)
 
-    # ── Brand header (just line + subtitle, no big title) ───────────
+    # ── Brand header (just the decorative line, no subtitle) ────────
     st.sidebar.markdown("""
     <div class="sidebar-brand">
         <div class="brand-line"></div>
-        <p class="product-sub">YPF · Gerencia Visualización · DA&amp;IA</p>
     </div>
-    <style>
-        .sidebar-brand {
-            padding: 0.5rem 0.75rem 0.85rem;
-            text-align: center;
-        }
-        .sidebar-brand .brand-line {
-            height: 2px;
-            background: linear-gradient(90deg, #F2C811 0%, #FFD84A 60%, transparent 100%);
-            margin: 0.75rem auto 0.85rem;
-            width: 100%;
-        }
-        .sidebar-brand .product-name {
-            color: #FFF; font-size: 1.05rem; font-weight: 700;
-            letter-spacing: -0.02em; margin: 0;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-        .sidebar-brand .product-sub {
-            color: #94A3B8; font-size: 0.62rem; font-weight: 500;
-            text-transform: uppercase; letter-spacing: 0.14em;
-            margin: 0.25rem 0 0;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .sidebar-label {
-            color: #94A3B8; font-size: 0.6rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.14em;
-            padding: 0.85rem 0 0.4rem;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .sidebar-footer {
-            margin-top: 1.25rem; padding: 0.85rem 0.75rem 0.5rem;
-            border-top: 1px solid rgba(255,255,255,0.07);
-        }
-        .sidebar-footer .footer-text {
-            color: #64748B; font-size: 0.6rem; text-align: center;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.06em; margin: 0 0 0.6rem 0;
-        }
-    </style>
     """, unsafe_allow_html=True)
 
     st.sidebar.divider()

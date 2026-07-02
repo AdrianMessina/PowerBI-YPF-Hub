@@ -1,0 +1,90 @@
+# Power BI Analyzer 2.0 - Thresholds & Scoring Configuration
+
+thresholds:
+  visualizations_per_page:
+    good: 10
+    warning: 15
+    critical: 20
+    weight: 0.12
+    description: "Visualizaciones por página"
+
+  filters_per_page:
+    good: 5
+    warning: 8
+    critical: 12
+    weight: 0.12
+    description: "Filtros por página"
+
+  custom_visuals:
+    good: 3
+    warning: 5
+    critical: 8
+    weight: 0.08
+    description: "Visualizaciones personalizadas"
+
+  embedded_images_mb:
+    good: 1.0
+    warning: 5.0
+    critical: 10.0
+    weight: 0.12
+    description: "Imágenes embebidas (MB)"
+
+  total_pages:
+    good: 10
+    warning: 20
+    critical: 30
+    weight: 0.08
+    description: "Total de páginas"
+
+  dax_measures_complex:
+    good: 20
+    warning: 40
+    critical: 60
+    weight: 0.18
+    description: "Medidas DAX complejas"
+
+  tables_in_model:
+    good: 15
+    warning: 30
+    critical: 50
+    weight: 0.10
+    description: "Tablas en el modelo"
+
+  relationships:
+    good: 20
+    warning: 40
+    critical: 60
+    weight: 0.05
+    description: "Relaciones"
+
+  bidirectional_relationships:
+    good: 0
+    warning: 2
+    critical: 5
+    weight: 0.08
+    description: "Relaciones bidireccionales"
+
+  calculated_columns:
+    good: 10
+    warning: 20
+    critical: 50
+    weight: 0.04
+    description: "Columnas calculadas"
+
+  model_size_mb:
+    good: 500
+    warning: 1000
+    critical: 2000
+    weight: 0.03
+    description: "Tamaño del modelo (MB)"
+
+scoring:
+  excellent: 90
+  good: 75
+  warning: 60
+  poor: 0
+
+score_values:
+  good: 100
+  warning: 70
+  critical: 30

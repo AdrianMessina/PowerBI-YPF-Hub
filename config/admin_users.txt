@@ -1,0 +1,4 @@
+# Usuarios con acceso al dashboard de Uso
+# Un usuario por linea (Windows username, lowercase)
+# Ejemplo: se46958
+se46958

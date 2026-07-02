@@ -390,6 +390,27 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     margin: 0 0 0.5rem;
 }
+.help-box p,
+.help-box li,
+.help-box ul,
+.help-box strong {
+    color: var(--ink-2);
+}
+.help-box strong { color: var(--ink); }
+
+/* Section header (used in DocGen form sections) */
+.section-header {
+    background: var(--surface-0);
+    border-left: 3px solid var(--blue);
+    color: var(--ink);
+    padding: 0.6rem 1rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin: 1.25rem 0 0.75rem 0;
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+    font-family: var(--sans);
+    letter-spacing: -0.01em;
+}
 [data-testid="stInfo"] {
     background: var(--blue-subtle) !important;
     border: 1px solid rgba(4,81,228,0.15) !important;
@@ -413,6 +434,55 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid rgba(220,38,38,0.20) !important;
     border-radius: var(--r-md) !important;
     color: var(--ink-2) !important;
+}
+
+/* Force bright text inside stInfo/stWarning/stSuccess/stError markdown */
+main [data-testid="stInfo"] p,
+main [data-testid="stInfo"] li,
+main [data-testid="stInfo"] strong,
+main [data-testid="stSuccess"] p,
+main [data-testid="stSuccess"] li,
+main [data-testid="stSuccess"] strong,
+main [data-testid="stWarning"] p,
+main [data-testid="stWarning"] li,
+main [data-testid="stWarning"] strong,
+main [data-testid="stError"] p,
+main [data-testid="stError"] li,
+main [data-testid="stError"] strong {
+    color: var(--ink) !important;
+}
+
+/* Ensure main content area markdown text is always readable on dark bg */
+main [data-testid="stMarkdownContainer"],
+main [data-testid="stMarkdownContainer"] p,
+main [data-testid="stMarkdownContainer"] li,
+main [data-testid="stMarkdownContainer"] ol,
+main [data-testid="stMarkdownContainer"] ul {
+    color: var(--ink-2) !important;
+}
+main [data-testid="stMarkdownContainer"] strong {
+    color: var(--ink) !important;
+}
+main [data-testid="stMarkdownContainer"] h1,
+main [data-testid="stMarkdownContainer"] h2,
+main [data-testid="stMarkdownContainer"] h3,
+main [data-testid="stMarkdownContainer"] h4,
+main [data-testid="stMarkdownContainer"] h5,
+main [data-testid="stMarkdownContainer"] h6 {
+    color: var(--ink) !important;
+}
+
+/* Expander content — bright text on subtle bg */
+main [data-testid="stExpander"] [data-testid="stMarkdownContainer"],
+main [data-testid="stExpander"] [data-testid="stMarkdownContainer"] p,
+main [data-testid="stExpander"] [data-testid="stMarkdownContainer"] li,
+main [data-testid="stExpander"] [data-testid="stMarkdownContainer"] ol {
+    color: var(--ink-2) !important;
+}
+main [data-testid="stExpander"] > details > div {
+    background: var(--surface-0) !important;
+    border-radius: 0 0 var(--r-md) var(--r-md) !important;
+    padding: 0.75rem 1rem !important;
 }
 
 /* ============ BUTTONS ============ */

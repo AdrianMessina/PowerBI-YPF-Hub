@@ -19,7 +19,11 @@ from core.usage_logger import UsageLogger
 from core.analyzers.analyzer import PowerBIAnalyzer
 
 # Modules
-from modules import home, analyzer, fixer, dax_optimizer, performance_analyzer, dax_benchmarker
+from modules import (
+    home, analyzer, fixer,
+    dax_optimizer, performance_analyzer, dax_benchmarker,
+    documentation_generator, layout_organizer,
+)
 
 
 # ── Page Config ──────────────────────────────────────────────────────
@@ -97,6 +101,8 @@ def _render_sidebar():
         "⚡ DAX Optimizer",
         "📈 Performance Analyzer",
         "🎯 DAX Benchmarker",
+        "📄 Documentation Generator",
+        "🎨 Layout Organizer",
     ]
 
     # Store selection in session_state
@@ -193,6 +199,10 @@ def main():
         performance_analyzer.render(logger)
     elif "DAX Benchmarker" in page:
         dax_benchmarker.render(logger)
+    elif "Documentation" in page:
+        documentation_generator.render(logger)
+    elif "Layout Organizer" in page:
+        layout_organizer.render(logger)
 
 
 if __name__ == "__main__":

@@ -17,10 +17,8 @@ from apps_core.layout_core.module_showcase import render_module_showcase
 
 def render(logger):
     """Render Analyzer module."""
-    project = require_project()
-    if project is None:
-        return
 
+    # Header FIRST (visible even without project loaded)
     st.markdown(
         '<h1 class="main-header">🔍 Analyzer</h1>',
         unsafe_allow_html=True,
@@ -46,6 +44,11 @@ def render(logger):
             ("📤", "Export CSV / JSON"),
         ],
     )
+
+    # Now check project
+    project = require_project()
+    if project is None:
+        return
 
     # Summary metrics at top
     render_summary_metrics(project)

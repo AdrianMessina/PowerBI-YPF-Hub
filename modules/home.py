@@ -58,10 +58,20 @@ def render(logger):
                 "(37 fixers disponibles) sin abrir Power BI Desktop."
             )
     else:
-        st.info(
-            "👈 **Cargá un proyecto PBIP desde el sidebar** para comenzar. "
-            "Todos los módulos usarán el mismo proyecto."
-        )
+        st.markdown("""
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+                    border-left: 3px solid #0451E4; border-radius: 6px;
+                    padding: 1rem 1.35rem; margin: 1rem 0;">
+            <p style="color: #E8ECF4; margin: 0 0 0.35rem 0; font-weight: 600;
+                      font-family: 'Fira Sans', sans-serif; font-size: 0.95rem;">
+                Cargá un proyecto PBIP desde el sidebar para comenzar
+            </p>
+            <p style="color: #94A3B8; margin: 0; font-family: 'Fira Sans', sans-serif;
+                      font-size: 0.85rem; line-height: 1.5;">
+                Todos los módulos usarán automáticamente el mismo proyecto.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("---")
 

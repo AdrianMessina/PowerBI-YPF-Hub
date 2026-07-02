@@ -31,13 +31,21 @@ def render(logger):
     """Performance Analyzer module for PBI Hub."""
 
     st.markdown(
-        '<h1 class="main-header">📊 Performance Analyzer</h1>',
+        '<h1 class="main-header">📈 Performance Analyzer</h1>',
         unsafe_allow_html=True,
     )
     st.markdown(
         '<p class="sub-header">Analizá los exports JSON del Performance Analyzer '
         'de Power BI Desktop para identificar visuales lentos y consultas DAX costosas.</p>',
         unsafe_allow_html=True,
+    )
+
+    # ── Info banner: different input type ────────────────────────────
+    st.info(
+        "ℹ️ **Este módulo requiere un input diferente** al del sidebar: "
+        "un archivo JSON exportado desde el Performance Analyzer de Power BI Desktop "
+        "(View → Performance Analyzer → Export). "
+        "El proyecto del sidebar **no se usa** acá."
     )
 
     # ── Instrucciones plegables ────────────────────────────────────

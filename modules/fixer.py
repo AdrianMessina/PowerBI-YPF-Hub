@@ -9,10 +9,8 @@ from apps_core.layout_core.module_showcase import render_module_showcase
 
 def render(logger):
     """Render Auto-Fixer module."""
-    project = require_project()
-    if project is None:
-        return
 
+    # Header FIRST (visible even without project loaded)
     st.markdown(
         '<h1 class="main-header">🔧 Auto-Fixer</h1>',
         unsafe_allow_html=True,
@@ -38,6 +36,11 @@ def render(logger):
             ("📋", "Log de cambios aplicados"),
         ],
     )
+
+    # Now check project
+    project = require_project()
+    if project is None:
+        return
 
     render_fixer_tab(project)
 

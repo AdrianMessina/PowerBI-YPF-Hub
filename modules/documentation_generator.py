@@ -32,7 +32,7 @@ def render(logger_suite):
 
     # Import shared styles
     from apps_core.layout_core.shared_styles import render_app_header, render_footer
-    from apps_core.layout_core.docgen_showcase import render_docgen_showcase
+    from apps_core.layout_core.module_showcase import render_module_showcase
 
     # Header — usando main-header + sub-header como otros módulos
     st.markdown(
@@ -44,8 +44,22 @@ def render(logger_suite):
         unsafe_allow_html=True,
     )
 
-    # Showcase - what gets documented
-    render_docgen_showcase()
+    # Showcase - what gets documented (consistent with other modules)
+    render_module_showcase(
+        title="¿Qué documenta automáticamente?",
+        description=(
+            "Analiza tu proyecto Power BI y genera documentación técnica-funcional "
+            "completa en formato Word con template corporativo YPF."
+        ),
+        items=[
+            ("🗂️", "Tablas del modelo"),
+            ("📊", "Medidas DAX"),
+            ("🔗", "Relaciones"),
+            ("📐", "Columnas calculadas"),
+            ("📈", "Visualizaciones"),
+            ("🎨", "Diagrama ER"),
+        ],
+    )
 
     # Examples in expander
     with st.expander("👁️ Ver ejemplos de documentación generada", expanded=False):

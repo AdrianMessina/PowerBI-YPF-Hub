@@ -12,10 +12,8 @@ from apps_core.layout_core.module_showcase import render_module_showcase
 
 def render(logger):
     """Memory Estimator module for PBI Hub."""
-    project = require_project()
-    if project is None:
-        return
 
+    # Header FIRST (visible even without project loaded)
     st.markdown(
         '<h1 class="main-header">💾 Memory Estimator</h1>',
         unsafe_allow_html=True,
@@ -41,6 +39,11 @@ def render(logger):
             ("⚠️", "Detección de high-cardinality"),
         ],
     )
+
+    # Now check project
+    project = require_project()
+    if project is None:
+        return
 
     render_memory_tab(project)
 

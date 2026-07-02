@@ -190,30 +190,26 @@ def render(logger):
         # Cómo funciona en el header
         with st.expander("📖 ¿Cómo funciona?", expanded=False):
             st.markdown("""
-            <div class="how-it-works-box">
-    
-            ### 🔄 Proceso de análisis:
-    
-            1. **📁 Carga del archivo PBIP**: Se extraen todas las medidas DAX del modelo
-            2. **🔍 Análisis individual**: Cada medida se analiza en busca de:
-               - Problemas críticos de performance
-               - Advertencias de mejores prácticas
-               - Oportunidades de optimización
-            3. **📊 Cálculo de scores**: Se asigna un score de 0-100 a cada medida
-            4. **📈 Ranking y priorización**: Las medidas se ordenan por impacto
-            5. **💡 Recomendaciones**: Se generan sugerencias específicas de optimización
-    
-            ### 📏 Criterios de evaluación (Score de Riesgo):
-    
-            - 🔴 **Crítico (76-100)**: Problemas severos que afectan significativamente la performance
-            - 🟠 **Alto (51-75)**: Múltiples warnings o complejidad alta
-            - 🟡 **Medio (26-50)**: Algunos problemas menores
-            - 🟢 **Bajo (0-25)**: Código bien optimizado
-    
-            **📌 Nota:** Mayor score = Mayor riesgo de impacto en performance
-    
-            </div>
-            """, unsafe_allow_html=True)
+**🔄 Proceso de análisis:**
+
+1. **📁 Carga del archivo PBIP** — Se extraen todas las medidas DAX del modelo
+2. **🔍 Análisis individual** — Cada medida se analiza en busca de:
+   - Problemas críticos de performance
+   - Advertencias de mejores prácticas
+   - Oportunidades de optimización
+3. **📊 Cálculo de scores** — Se asigna un score de 0-100 a cada medida
+4. **📈 Ranking y priorización** — Las medidas se ordenan por impacto
+5. **💡 Recomendaciones** — Se generan sugerencias específicas de optimización
+
+**📏 Criterios de evaluación (Score de Riesgo):**
+
+- 🔴 **Crítico (76-100)** — Problemas severos que afectan significativamente la performance
+- 🟠 **Alto (51-75)** — Múltiples warnings o complejidad alta
+- 🟡 **Medio (26-50)** — Algunos problemas menores
+- 🟢 **Bajo (0-25)** — Código bien optimizado
+
+📌 *Mayor score = Mayor riesgo de impacto en performance.*
+            """)
     
     
     def render_file_upload():
@@ -589,9 +585,11 @@ def render(logger):
         with col1:
             st.markdown(f"### {measure.name}")
             st.markdown(f"""
-            <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%);
-                        padding: 8px 12px; border-radius: 8px; display: inline-block; margin-top: 5px;">
-                📊 Tabla: <strong>{measure.table}</strong>
+            <div style="background: rgba(4,81,228,0.10); color: #E8ECF4;
+                        border: 1px solid rgba(4,81,228,0.25);
+                        padding: 6px 12px; border-radius: 6px; display: inline-block; margin-top: 5px;
+                        font-family: 'Fira Sans', sans-serif; font-size: 0.85rem;">
+                📊 Tabla: <strong style="color: #F1F5F9;">{measure.table}</strong>
             </div>
             """, unsafe_allow_html=True)
     
@@ -1033,14 +1031,18 @@ def render(logger):
     
             # Ejemplo visual de cómo funciona
             st.markdown("""
-            <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-                        border-radius: 12px; padding: 20px; margin-top: 20px; border-left: 5px solid #0451E4;">
-                <h4 style="color: #0451E4; margin-top: 0;">💡 Ejemplo de uso</h4>
-                <ol style="color: #495057;">
-                    <li><strong>Copia la ruta de tu archivo PBIP</strong> desde el explorador de Windows</li>
-                    <li><strong>Pégala en el campo de arriba</strong> (con o sin comillas)</li>
-                    <li><strong>La aplicación procesará automáticamente</strong> todas las medidas DAX</li>
-                    <li><strong>Revisa los resultados</strong> y exporta el análisis</li>
+            <div style="background: rgba(4,81,228,0.06); border: 1px solid rgba(4,81,228,0.20);
+                        border-left: 3px solid #0451E4; border-radius: 6px;
+                        padding: 1.15rem 1.5rem; margin-top: 1.5rem;
+                        font-family: 'Fira Sans', sans-serif;">
+                <h4 style="color: #F1F5F9; margin: 0 0 0.75rem 0; font-size: 1rem; font-weight: 700;">
+                    💡 Ejemplo de uso
+                </h4>
+                <ol style="color: #CBD5E1; margin: 0; padding-left: 1.25rem; line-height: 1.75;">
+                    <li><strong style="color:#F1F5F9;">Copia la ruta de tu archivo PBIP</strong> desde el explorador de Windows</li>
+                    <li><strong style="color:#F1F5F9;">Pégala en el campo de arriba</strong> (con o sin comillas)</li>
+                    <li><strong style="color:#F1F5F9;">La aplicación procesará automáticamente</strong> todas las medidas DAX</li>
+                    <li><strong style="color:#F1F5F9;">Revisa los resultados</strong> y exporta el análisis</li>
                 </ol>
             </div>
             """, unsafe_allow_html=True)

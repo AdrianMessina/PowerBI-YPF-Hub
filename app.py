@@ -6,6 +6,8 @@ Un solo upload de PBIP → todos los módulos lo comparten via session_state.
 
 import os
 import sys
+from pathlib import Path
+
 import streamlit as st
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -50,26 +52,70 @@ def _get_logger() -> UsageLogger:
 # ── Sidebar ──────────────────────────────────────────────────────────
 
 def _render_sidebar():
-    """Sidebar with logo, project loader, and navigation."""
+    """Sidebar with YPF logo, brand, project loader, navigation, DA&IA footer."""
 
+    # ── YPF Logo (top, 80px like PBI Error Helper) ───────────────────
+    logo_ypf_path = Path(__file__).parent / "assets" / "logo_ypf.png"
+    if logo_ypf_path.exists():
+        with st.sidebar:
+            c1, c2, c3 = st.columns([1, 2, 1])
+            with c2:
+                st.image(str(logo_ypf_path), width=80)
+
+    # ── Brand header (PBI Error Helper style: line + name + sub) ─────
     st.sidebar.markdown("""
-    <div style="text-align: center; padding: 1rem 0 0.5rem 0;">
-        <h1 style="font-size: 1.4rem; font-weight: 700; margin: 0;
-                   color: #E8ECF4; letter-spacing: -0.04em;
-                   font-family: 'Space Grotesk', sans-serif;">
-            PBI <span style="color: #F2C811;">Hub</span>
-        </h1>
-        <p style="font-size: 0.68rem; margin-top: 0.4rem; color: #5A6478;
-                  text-transform: uppercase; letter-spacing: 0.1em;">
-            YPF Data Analytics
-        </p>
+    <div class="sidebar-brand">
+        <div class="brand-line"></div>
+        <p class="product-name">PBI Hub</p>
+        <p class="product-sub">YPF · Gerencia Visualización · DA&amp;IA</p>
     </div>
+    <style>
+        .sidebar-brand {
+            padding: 0.5rem 0.75rem 0.85rem;
+            text-align: center;
+        }
+        .sidebar-brand .brand-line {
+            height: 2px;
+            background: linear-gradient(90deg, #F2C811 0%, #FFD84A 60%, transparent 100%);
+            margin: 0.75rem auto 0.85rem;
+            width: 100%;
+        }
+        .sidebar-brand .product-name {
+            color: #FFF; font-size: 1.05rem; font-weight: 700;
+            letter-spacing: -0.02em; margin: 0;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .sidebar-brand .product-sub {
+            color: #94A3B8; font-size: 0.62rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.14em;
+            margin: 0.25rem 0 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .sidebar-label {
+            color: #94A3B8; font-size: 0.6rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.14em;
+            padding: 0.85rem 0 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .sidebar-footer {
+            margin-top: 1.25rem; padding: 0.85rem 0.75rem 0.5rem;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+        .sidebar-footer .footer-text {
+            color: #64748B; font-size: 0.6rem; text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.06em; margin: 0 0 0.6rem 0;
+        }
+    </style>
     """, unsafe_allow_html=True)
 
     st.sidebar.divider()
 
     # ── Project loader ───────────────────────────────────────────────
-    st.sidebar.markdown("**📁 Proyecto**")
+    st.sidebar.markdown(
+        '<div class="sidebar-label">Proyecto Power BI</div>',
+        unsafe_allow_html=True,
+    )
 
     project = get_project()
 
@@ -90,10 +136,34 @@ def _render_sidebar():
         else:
             _render_local_loader()
 
+    # ── Módulos que usan este proyecto ───────────────────────────────
+    with st.sidebar.expander("ℹ️ ¿Qué módulos usan este proyecto?", expanded=False):
+        st.markdown("""
+**✅ Usan el proyecto cargado:**
+- 🔍 Analyzer
+- 🔧 Auto-Fixer
+- ⚡ DAX Optimizer
+- 📄 Documentation Generator
+- 🛠️ Tools
+- 💾 Memory Estimator
+
+**⚙️ Tienen input propio (diferente):**
+- 📈 Performance Analyzer *(JSON export)*
+- 🎯 DAX Benchmarker *(query DAX + conexión)*
+- 🎨 Layout Organizer *(PBIX/PBIT/JSON por tab)*
+
+**🌐 No requieren proyecto:**
+- 🏠 Home
+- 📊 Usage Dashboard
+        """)
+
     st.sidebar.divider()
 
     # ── Navigation ───────────────────────────────────────────────────
-    st.sidebar.markdown("**🧭 Navegación**")
+    st.sidebar.markdown(
+        '<div class="sidebar-label">Navegación</div>',
+        unsafe_allow_html=True,
+    )
 
     nav_options = [
         "🏠 Home",
@@ -120,14 +190,20 @@ def _render_sidebar():
         key="nav_radio",
     )
 
-    st.sidebar.divider()
+    # ── Footer (PBI Error Helper style) ──────────────────────────────
+    st.sidebar.markdown("""
+    <div class="sidebar-footer">
+        <p class="footer-text">YPF · Gerencia Visualización · DA&amp;IA</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    # Footer
-    st.sidebar.caption(
-        "PBI Hub v1.0 · MVP\n\n"
-        "Módulos futuros: DAX Optimizer, Performance Analyzer, "
-        "DAX Benchmarker, DocGen, Layout Organizer, Tools, Memory, Usage."
-    )
+    # ── DA&IA Logo ───────────────────────────────────────────────────
+    logo_daia_path = Path(__file__).parent / "assets" / "logo_daia.png"
+    if logo_daia_path.exists():
+        with st.sidebar:
+            c1, c2, c3 = st.columns([1, 3, 1])
+            with c2:
+                st.image(str(logo_daia_path), width="stretch")
 
     return page
 

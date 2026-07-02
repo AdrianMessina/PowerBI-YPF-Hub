@@ -23,6 +23,7 @@ from modules import (
     home, analyzer, fixer,
     dax_optimizer, performance_analyzer, dax_benchmarker,
     documentation_generator, layout_organizer,
+    tools, memory, usage,
 )
 
 
@@ -103,6 +104,9 @@ def _render_sidebar():
         "🎯 DAX Benchmarker",
         "📄 Documentation Generator",
         "🎨 Layout Organizer",
+        "🛠️ Tools",
+        "💾 Memory Estimator",
+        "📊 Usage Dashboard",
     ]
 
     # Store selection in session_state
@@ -203,6 +207,12 @@ def main():
         documentation_generator.render(logger)
     elif "Layout Organizer" in page:
         layout_organizer.render(logger)
+    elif "Tools" in page:
+        tools.render(logger)
+    elif "Memory Estimator" in page:
+        memory.render(logger)
+    elif "Usage Dashboard" in page:
+        usage.render(logger)
 
 
 if __name__ == "__main__":

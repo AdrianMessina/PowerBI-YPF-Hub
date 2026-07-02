@@ -4,6 +4,7 @@ import streamlit as st
 
 from shared.loader import require_project
 from ui.tab_fixer import render_fixer_tab
+from apps_core.layout_core.module_showcase import render_module_showcase
 
 
 def render(logger):
@@ -20,6 +21,22 @@ def render(logger):
         '<p class="sub-header">Correcciones automáticas de problemas '
         'de reporte, modelo y Best Practices. 37 fixers disponibles.</p>',
         unsafe_allow_html=True,
+    )
+
+    render_module_showcase(
+        title="¿Qué corrige automáticamente?",
+        description=(
+            "Aplica 37 correcciones automáticas sin abrir Power BI Desktop. "
+            "Cubre problemas de reporte (PBIR), modelo (TMDL) y BPA."
+        ),
+        items=[
+            ("🎨", "11 fixers de reporte"),
+            ("🧱", "10 fixers de modelo"),
+            ("📏", "16 fixers BPA"),
+            ("✅", "Validador post-fix"),
+            ("🔄", "Rollback disponible"),
+            ("📋", "Log de cambios aplicados"),
+        ],
     )
 
     render_fixer_tab(project)

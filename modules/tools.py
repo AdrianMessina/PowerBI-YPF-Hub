@@ -7,6 +7,7 @@ import streamlit as st
 
 from shared.loader import require_project
 from ui.tab_tools import render_tools_tab
+from apps_core.layout_core.module_showcase import render_module_showcase
 
 
 def render(logger):
@@ -23,6 +24,22 @@ def render(logger):
         '<p class="sub-header">Herramientas avanzadas: Delta Analyzer, '
         'Aggregation Suggester, Perspectives y Translations.</p>',
         unsafe_allow_html=True,
+    )
+
+    render_module_showcase(
+        title="¿Qué herramientas incluye?",
+        description=(
+            "Suite de herramientas especializadas para gestión avanzada del modelo semántico "
+            "y detección de oportunidades de optimización."
+        ),
+        items=[
+            ("📸", "Delta Analyzer (snapshots)"),
+            ("📊", "Aggregation Suggester"),
+            ("👥", "Perspectives"),
+            ("🌐", "Translations"),
+            ("🔍", "Comparación entre versiones"),
+            ("📈", "Reglas de agregación"),
+        ],
     )
 
     render_tools_tab(project)

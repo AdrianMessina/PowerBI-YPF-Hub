@@ -12,6 +12,7 @@ from ui.tab_metrics import render_metrics_tab
 from ui.tab_recommendations import render_recommendations_tab
 from ui.tab_export import render_export_tab
 from ui.components import render_summary_metrics
+from apps_core.layout_core.module_showcase import render_module_showcase
 
 
 def render(logger):
@@ -28,6 +29,22 @@ def render(logger):
         '<p class="sub-header">Análisis integral con score, métricas '
         'y recomendaciones basadas en 60+ reglas de Best Practices.</p>',
         unsafe_allow_html=True,
+    )
+
+    render_module_showcase(
+        title="¿Qué analiza este módulo?",
+        description=(
+            "Evalúa tu proyecto Power BI y genera un score de calidad "
+            "aplicando más de 60 reglas de Best Practices Analyzer (BPA)."
+        ),
+        items=[
+            ("📊", "Score global 0-100"),
+            ("🗂️", "Métricas de reporte"),
+            ("🧮", "Métricas del modelo"),
+            ("⚠️", "Recomendaciones priorizadas"),
+            ("🎯", "Detección de anti-patterns"),
+            ("📤", "Export CSV / JSON"),
+        ],
     )
 
     # Summary metrics at top

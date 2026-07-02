@@ -11,6 +11,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+from apps_core.layout_core.module_showcase import render_module_showcase
+
 
 def render(logger):
     """Layout Organizer module for PBI Hub."""
@@ -22,18 +24,9 @@ def render(logger):
     usage_logger = logger
     LOGGING_ENABLED = logger is not None
 
-    # App-specific styles aligned to Industrial Data Observatory design system
+    # App-specific styles for info/warning boxes (NOT main-header — usa el global)
     st.markdown("""
     <style>
-        .main-header {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.75rem;
-            color: var(--text-primary);
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            margin-bottom: 0.5rem;
-        }
-        .main-header .accent { color: var(--brand-accent); }
         .info-box, .success-box {
             padding: 1rem 1.25rem;
             border-radius: 0 var(--radius-md) var(--radius-md) 0;
@@ -55,9 +48,39 @@ def render(logger):
     </style>
     """, unsafe_allow_html=True)
 
-    # Header
-    st.markdown('<div class="main-header">Power BI Model <span class="accent">Layout Organizer</span></div>', unsafe_allow_html=True)
-    st.markdown("**Organiza automáticamente los diagramas de modelo de Power BI**")
+    # Header — consistent with other modules
+    st.markdown(
+        '<h1 class="main-header">🎨 Layout Organizer</h1>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<p class="sub-header">Organiza automáticamente los diagramas del modelo '
+        'de Power BI con layouts Star, Grid y detección de snowflake.</p>',
+        unsafe_allow_html=True,
+    )
+
+    # Info banner: this module uses different inputs than sidebar
+    st.info(
+        "ℹ️ **Este módulo tiene inputs propios por tab** (PBIX, PBIT, JSON analysis) "
+        "porque cada operación requiere un formato distinto. "
+        "El proyecto del sidebar **no se usa** en este módulo."
+    )
+
+    render_module_showcase(
+        title="¿Qué organiza este módulo?",
+        description=(
+            "Reorganiza automáticamente el diagrama del modelo de Power BI "
+            "aplicando layouts profesionales según el tipo de esquema detectado."
+        ),
+        items=[
+            ("⭐", "Star Schema layout"),
+            ("🔲", "Grid layout"),
+            ("❄️", "Detección de snowflake"),
+            ("🎯", "Tabs focalizados por hecho"),
+            ("🔗", "Extracción de relaciones"),
+            ("📐", "Radio configurable"),
+        ],
+    )
     
     # Tabs principales
     tab1, tab2, tab3, tab4 = st.tabs(["🎯 Organizar Layout", "🔍 Extraer Relaciones", "📊 Análisis", "ℹ️ Ayuda"])

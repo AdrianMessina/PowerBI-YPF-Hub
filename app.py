@@ -62,11 +62,10 @@ def _render_sidebar():
             with c2:
                 st.image(str(logo_ypf_path), width=80)
 
-    # ── Brand header (PBI Error Helper style: line + name + sub) ─────
+    # ── Brand header (just line + subtitle, no big title) ───────────
     st.sidebar.markdown("""
     <div class="sidebar-brand">
         <div class="brand-line"></div>
-        <p class="product-name">PBI Hub</p>
         <p class="product-sub">YPF · Gerencia Visualización · DA&amp;IA</p>
     </div>
     <style>

@@ -135,27 +135,6 @@ def _render_sidebar():
         else:
             _render_local_loader()
 
-    # ── Módulos que usan este proyecto ───────────────────────────────
-    with st.sidebar.expander("ℹ️ ¿Qué módulos usan este proyecto?", expanded=False):
-        st.markdown("""
-**✅ Usan el proyecto cargado:**
-- 🔍 Analyzer
-- 🔧 Auto-Fixer
-- ⚡ DAX Optimizer
-- 📄 Documentation Generator
-- 🛠️ Tools
-- 💾 Memory Estimator
-
-**⚙️ Tienen input propio (diferente):**
-- 📈 Performance Analyzer *(JSON export)*
-- 🎯 DAX Benchmarker *(query DAX + conexión)*
-- 🎨 Layout Organizer *(PBIX/PBIT/JSON por tab)*
-
-**🌐 No requieren proyecto:**
-- 🏠 Home
-- 📊 Usage Dashboard
-        """)
-
     st.sidebar.divider()
 
     # ── Navigation ───────────────────────────────────────────────────

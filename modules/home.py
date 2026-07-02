@@ -8,15 +8,19 @@ from shared.loader import get_project
 def render(logger):
     """Render home dashboard."""
 
-    st.markdown(
-        '<h1 class="main-header">PBI <span style="color: #F2C811;">Hub</span></h1>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<p class="sub-header">Suite integrada de análisis, corrección '
-        'y optimización de proyectos Power BI.</p>',
-        unsafe_allow_html=True,
-    )
+    # Title + subtitle with more prominence
+    st.markdown("""
+    <div style="text-align: center; padding: 1.5rem 0 2rem;">
+        <h1 style="font-family: 'Fira Sans', sans-serif; font-size: 2.8rem; font-weight: 800;
+                   color: #E8ECF4; margin: 0 0 1rem; letter-spacing: -0.04em; line-height: 1.1;">
+            PBI <span style="color: #0451E4;">Hub</span>
+        </h1>
+        <p style="font-family: 'Fira Sans', sans-serif; font-size: 1.15rem; font-weight: 400;
+                  color: #CBD5E1; margin: 0; line-height: 1.6; max-width: 700px; margin: 0 auto;">
+            Suite integrada de análisis, corrección y optimización de proyectos Power BI.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("---")
 
@@ -158,19 +162,24 @@ def _render_module_card(title, description, features, available=True):
     features_html = "".join(f"<li>{f}</li>" for f in features)
 
     st.markdown(f"""
-    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
-                border-radius: 8px; padding: 1.25rem; margin-bottom: 0.75rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-            <h3 style="margin: 0; color: #E8ECF4; font-family: 'Space Grotesk', sans-serif;">
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10);
+                border-radius: 10px; padding: 1.5rem; margin-bottom: 0.85rem;
+                transition: all 0.2s ease; cursor: default;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+            <h3 style="margin: 0; color: #F1F5F9; font-family: 'Fira Sans', sans-serif;
+                       font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em;">
                 {title}
             </h3>
-            <span style="background: {color}22; color: {color}; padding: 0.2rem 0.6rem;
-                         border-radius: 4px; font-size: 0.7rem; font-weight: 600;">
+            <span style="background: {color}30; color: {color}; padding: 0.3rem 0.7rem;
+                         border-radius: 5px; font-size: 0.72rem; font-weight: 700;
+                         font-family: 'Fira Code', monospace; letter-spacing: 0.05em;">
                 {badge}
             </span>
         </div>
-        <p style="color: #8B95A8; margin: 0.5rem 0;">{description}</p>
-        <ul style="color: #B8C0D0; font-size: 0.85rem; margin: 0.5rem 0 0 1rem;">
+        <p style="color: #CBD5E1; margin: 0.5rem 0 0.75rem; line-height: 1.55;
+                  font-family: 'Fira Sans', sans-serif;">{description}</p>
+        <ul style="color: #94A3B8; font-size: 0.88rem; margin: 0.5rem 0 0 1.25rem;
+                   line-height: 1.65; font-family: 'Fira Sans', sans-serif;">
             {features_html}
         </ul>
     </div>

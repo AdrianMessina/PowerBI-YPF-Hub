@@ -79,13 +79,34 @@ def render(logger):
         available=True,
     )
 
+    _render_module_card(
+        "⚡ DAX Optimizer",
+        "Ranking de medidas DAX por complejidad y riesgo con recomendaciones.",
+        ["Score de complejidad por medida", "Detección de patrones costosos",
+         "Visualizaciones de análisis"],
+        available=True,
+    )
+
+    _render_module_card(
+        "📈 Performance Analyzer",
+        "Parser de exports JSON del Performance Analyzer de Power BI Desktop.",
+        ["Ranking de visuales por tiempo", "Separación DAX/Render/Other",
+         "Recomendaciones priorizadas P0-P3"],
+        available=True,
+    )
+
+    _render_module_card(
+        "🎯 DAX Benchmarker",
+        "Ejecución estadística de queries DAX con análisis de performance.",
+        ["Percentiles p50/p95/p99", "Detección de outliers y cold cache",
+         "Box plot y histograma de distribución"],
+        available=True,
+    )
+
     st.markdown("---")
     st.markdown("### 📅 Módulos próximos")
 
     coming = [
-        ("⚡ DAX Optimizer", "Ranking de medidas DAX por complejidad y riesgo"),
-        ("📈 Performance Analyzer", "Parser JSON del Performance Analyzer de Desktop"),
-        ("🎯 DAX Benchmarker", "Ejecución estadística de queries con percentiles"),
         ("📄 Documentation Generator", "Doc .docx técnico-funcional automática"),
         ("🎨 Layout Organizer", "Reorganización del diagrama del modelo"),
         ("🛠️ Tools", "Delta Analyzer, Aggregation Suggester, Perspectives, Translations"),

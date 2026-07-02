@@ -30,11 +30,11 @@ MAIN_CSS = """
     --yellow-hover: #FFD84A;
     --yellow-subtle: rgba(242,200,17,0.10);
 
-    /* Light surfaces */
-    --surface-0: #FFFFFF;
-    --surface-1: #F8FAFC;
-    --surface-2: #F1F5F9;
-    --surface-3: #E2E8F0;
+    /* Dark subtle surfaces (content area) */
+    --surface-0: #1F2937;
+    --surface-1: #1A1F2E;
+    --surface-2: #252B3A;
+    --surface-3: #2F3647;
 
     /* Dark sidebar */
     --dark-0: #080E1A;
@@ -42,26 +42,26 @@ MAIN_CSS = """
     --dark-2: #1E293B;
     --dark-3: #334155;
 
-    /* Ink (text) */
-    --ink: #0F172A;
-    --ink-2: #1E293B;
-    --ink-3: #4B5563;
+    /* Ink (text) — light for dark bg */
+    --ink: #E8ECF4;
+    --ink-2: #CBD5E1;
+    --ink-3: #94A3B8;
     --ink-4: #6B7280;
     --ink-on-dark: #CBD5E1;
     --ink-white: #F1F5F9;
 
     /* Lines */
-    --line: #E2E8F0;
-    --line-light: #F1F5F9;
+    --line: rgba(255,255,255,0.10);
+    --line-light: rgba(255,255,255,0.06);
     --line-dark: rgba(255,255,255,0.07);
 
     /* Severity */
-    --sev-alta: #DC2626;
-    --sev-alta-bg: rgba(220,38,38,0.08);
-    --sev-media: #D97706;
-    --sev-media-bg: rgba(217,119,6,0.08);
-    --sev-baja: #059669;
-    --sev-baja-bg: rgba(5,150,105,0.08);
+    --sev-alta: #EF4444;
+    --sev-alta-bg: rgba(239,68,68,0.12);
+    --sev-media: #F59E0B;
+    --sev-media-bg: rgba(245,158,11,0.12);
+    --sev-baja: #10B981;
+    --sev-baja-bg: rgba(16,185,129,0.12);
 
     /* Radius */
     --r-sm: 6px;
@@ -70,14 +70,14 @@ MAIN_CSS = """
     --r-xl: 16px;
     --r-full: 9999px;
 
-    /* Shadows */
-    --sh-xs: 0 1px 2px rgba(0,0,0,0.04);
-    --sh-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --sh-md: 0 4px 12px rgba(0,0,0,0.07);
-    --sh-lg: 0 10px 28px rgba(0,0,0,0.10);
-    --sh-blue: 0 4px 20px rgba(4,81,228,0.15);
-    --sh-hover: 0 8px 24px rgba(4,81,228,0.10), 0 2px 8px rgba(0,0,0,0.06);
-    --sh-console: inset 0 2px 8px rgba(0,0,0,0.15), 0 4px 20px rgba(0,0,0,0.12);
+    /* Shadows (darker for dark bg) */
+    --sh-xs: 0 1px 2px rgba(0,0,0,0.15);
+    --sh-sm: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.12);
+    --sh-md: 0 4px 12px rgba(0,0,0,0.30);
+    --sh-lg: 0 10px 28px rgba(0,0,0,0.40);
+    --sh-blue: 0 4px 20px rgba(4,81,228,0.25);
+    --sh-hover: 0 8px 24px rgba(4,81,228,0.18), 0 2px 8px rgba(0,0,0,0.12);
+    --sh-console: inset 0 2px 8px rgba(0,0,0,0.30), 0 4px 20px rgba(0,0,0,0.20);
 
     /* Motion */
     --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);

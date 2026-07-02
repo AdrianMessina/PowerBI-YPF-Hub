@@ -34,11 +34,14 @@ def render(logger_suite):
     from apps_core.layout_core.shared_styles import render_app_header, render_footer
     from apps_core.layout_core.docgen_showcase import render_docgen_showcase
 
-    # Header
-    render_app_header(
-        "Generador de Documentación Power BI",
-        "Generación automática de documentación técnica-funcional",
-        "4.0"
+    # Header — usando main-header + sub-header como otros módulos
+    st.markdown(
+        '<h1 class="main-header">📄 Documentation Generator</h1>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<p class="sub-header">Generación automática de documentación técnica-funcional en formato Word.</p>',
+        unsafe_allow_html=True,
     )
 
     # Showcase - what gets documented
@@ -66,88 +69,36 @@ def render(logger_suite):
 
     st.markdown("---")
 
-    # PBIP File Selection
-    st.markdown("### Archivo PBIP")
-    
-    # Try auto-detect first
-    pbip_folder = project_root / "PBI test"
-    pbip_files = []
-    if pbip_folder.exists():
-        pbip_files = [f for f in pbip_folder.glob("*.pbip") if f.is_file()]
-    
-    # Set default path if found
-    if pbip_files:
-        pbip_file_path = pbip_files[0]
-        default_path = str(pbip_file_path.resolve())
-        st.success(f"✅ Archivo detectado: **{pbip_file_path.name}**")
-        st.info(f"📂 Ruta completa: `{default_path}`")
-    else:
-        default_path = ""
-    
-    # Always show text input (editable)
-    manual_path_input = st.text_input(
-        "Ruta del archivo PBIP (editable)",
-        value=default_path,
-        placeholder=r"C:\ruta\completa\al\archivo.pbip",
-        help="Pega la ruta completa del archivo .pbip (se detectan y eliminan comillas automáticamente)"
-    )
+    # ── Unified project source (sidebar or local override) ────────────
+    from shared.loader import get_project
 
-    # Warning about file naming consistency
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(245,158,11,0.02) 100%);
-                border-left: 3px solid #F59E0B; padding: 0.6rem 1rem; border-radius: 0 6px 6px 0;
-                margin: 0.5rem 0; font-size: 0.85rem; color: #78350F;">
-        ⚠️ <strong>Mantén el mismo nombre del archivo</strong> para que el Usage Dashboard pueda rastrear las mejoras a lo largo del tiempo.
-    </div>
-    """, unsafe_allow_html=True)
+    project = get_project()
 
-    # Instructions on how to copy path
-    with st.expander("💡 ¿Cómo copiar la ruta del archivo?"):
-        st.markdown("""
-        **Opción A: Desde el Explorador de Windows**
-        1. Abre el Explorador de Windows
-        2. Navega hasta la carpeta que contiene tu archivo `.pbip`
-        3. **SHIFT + Click derecho** en el archivo `.pbip` → **Copiar como ruta de acceso**
-        4. Pega la ruta arriba ✅ **(se copiará con comillas, la app las procesa automáticamente)**
+    if project is not None:
+        pbip_path = Path(project.report_path)
 
-        **Opción B: Desde la barra de direcciones**
-        1. Abre el Explorador de Windows
-        2. Navega hasta la carpeta que contiene tu archivo `.pbip`
-        3. Click en la barra de direcciones arriba → Copiar
-        4. Pega la ruta arriba y agrega `\\NombreDeArchivo.pbip` al final
+        # If the loaded project path is a directory (Cloud ZIP extract),
+        # find the .pbip file inside
+        if pbip_path.is_dir():
+            pbip_files_in_dir = list(pbip_path.glob("*.pbip"))
+            if pbip_files_in_dir:
+                pbip_path = pbip_files_in_dir[0]
+            else:
+                # Search recursively (typical PBIP folder structure)
+                pbip_files_in_dir = list(pbip_path.rglob("*.pbip"))
+                if pbip_files_in_dir:
+                    pbip_path = pbip_files_in_dir[0]
 
-        **Ejemplo de ruta válida:**
-        ```
-        C:\\Users\\TuUsuario\\Documentos\\MiProyecto\\Reporte.pbip
-        ```
-        O con comillas:
-        ```
-        "C:\\Users\\TuUsuario\\Documentos\\MiProyecto\\Reporte.pbip"
-        ```
-
-        **Estructura PBIP esperada:**
-        - Archivo principal: `reporte.pbip`
-        - Carpeta asociada: `reporte.SemanticModel/` (modelo de datos)
-        - Carpeta asociada: `reporte.Report/` (visualizaciones)
-        """)
-
-    if manual_path_input:
-        # Clean path (remove quotes if present)
-        clean_path = manual_path_input.strip().strip('"').strip("'")
-        pbip_path = Path(clean_path)
-    
         if not pbip_path.exists():
-            st.error(f"❌ El archivo no existe: `{pbip_path}`")
-            st.warning("Verifica que la ruta sea correcta y el archivo exista")
-            st.stop()
-    
-        if pbip_path.suffix.lower() != '.pbip':
-            st.error(f"❌ El archivo debe tener extensión .pbip (encontrado: `{pbip_path.suffix}`)")
+            st.error(f"❌ No se encontró el archivo .pbip en: `{pbip_path}`")
+            st.info("Recargá el proyecto desde el sidebar.")
             st.stop()
     else:
-        st.warning("⚠️ Por favor especifica la ruta del archivo .pbip")
-        if pbip_folder.exists():
-            st.info(f"💡 Coloca tu archivo .pbip en: `{pbip_folder.resolve()}`")
+        st.warning(
+            "⚠️ **Sin proyecto cargado.** "
+            "Cargá un archivo PBIP desde el sidebar (uploader ZIP en Cloud, "
+            "ruta local en desktop). El módulo se activará automáticamente."
+        )
         st.stop()
     
     st.markdown("---")

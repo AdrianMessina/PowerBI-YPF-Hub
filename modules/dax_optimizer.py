@@ -178,12 +178,15 @@ def render(logger):
     
     def render_header():
         """Renderiza el header de la aplicación"""
-        render_app_header(
-            "DAX Optimizer",
-            "Análisis avanzado de medidas DAX con sistema de tolerancia",
-            "1.1"
+        st.markdown(
+            '<h1 class="main-header">⚡ DAX Optimizer</h1>',
+            unsafe_allow_html=True,
         )
-    
+        st.markdown(
+            '<p class="sub-header">Análisis avanzado de medidas DAX con sistema de tolerancia y score de riesgo.</p>',
+            unsafe_allow_html=True,
+        )
+
         # Cómo funciona en el header
         with st.expander("📖 ¿Cómo funciona?", expanded=False):
             st.markdown("""
@@ -898,110 +901,25 @@ def render(logger):
     
     def main():
         """Función principal de la aplicación"""
-    
+
         # Render header
         render_header()
     
-        # Sidebar con diseño mejorado
-        with st.sidebar:
-            # Logo/título del sidebar
-            st.markdown("""
-            <div style="text-align: center; padding: 10px;">
-                <h2 style="color: #0451E4; margin-bottom: 5px;">⚡ DAX Optimizer</h2>
-                <p style="color: #6c757d; font-size: 0.9rem; margin-top: -5px;">v1.1</p>
-            </div>
-            """, unsafe_allow_html=True)
-    
-            st.markdown("---")
-    
-            # Características con iconos mejorados
-            with st.expander("✨ Características principales", expanded=True):
-                st.markdown("""
-                - 📂 **Análisis completo de archivos PBIP**
-                  Procesa todo tu modelo de datos en segundos
-    
-                - 🔍 **Detección inteligente de problemas**
-                  Identifica issues críticos de performance
-    
-                - 📊 **Sistema de scoring con tolerancia**
-                  Evalúa el riesgo de cada medida DAX
-    
-                - 💡 **Sugerencias de optimización**
-                  Recomendaciones específicas y accionables
-    
-                - 📈 **Visualización de influencia**
-                  Gráficos interactivos para análisis rápido
-                """)
-    
-            st.markdown("---")
-    
-            # Guía rápida
-            with st.expander("🚀 Guía rápida"):
-                st.markdown("""
-                **Paso 1:** Copia la ruta de tu archivo `.pbip`
-    
-                **Paso 2:** Pégala en el campo de entrada (con o sin comillas)
-    
-                **Paso 3:** Ajusta la tolerancia de riesgo según tus necesidades
-    
-                **Paso 4:** Explora las medidas con mayor riesgo
-    
-                **Paso 5:** Exporta los resultados para compartir
-                """)
-    
-            st.markdown("---")
-    
-            # Desarrollador con diseño mejorado
-            st.markdown("""
-            <div class="developer-badge">
-                <p style="margin: 0; font-size: 0.85rem; opacity: 0.9;">Desarrollado por</p>
-                <h3 style="margin: 5px 0; font-size: 1.3rem;">Adrián Javier Messina</h3>
-                <p style="margin: 5px 0; font-size: 1rem; font-weight: 600;">Torre Visualización</p>
-                <p style="margin: 5px 0; font-size: 0.8rem; opacity: 0.8;">📅 Enero 2026</p>
-            </div>
-            """, unsafe_allow_html=True)
-    
-            st.markdown("---")
-    
-            # Recursos útiles
-            with st.expander("📚 Recursos y documentación"):
-                st.markdown("""
-                **Patrones DAX:**
-                - [SQLBI - DAX Patterns](https://www.sqlbi.com/patterns/)
-                - [DAX Guide](https://dax.guide/)
-    
-                **Power BI:**
-                - [Best Practices](https://docs.microsoft.com/power-bi/)
-                - [Performance Tuning](https://docs.microsoft.com/power-bi/guidance/power-bi-optimization)
-    
-                **Comunidad:**
-                - [Power BI Community](https://community.powerbi.com/)
-                """)
-    
-            st.markdown("---")
-    
-            # Versión
-            st.markdown("""
-            <div style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 8px;">
-                <p style="margin: 0; font-size: 0.85rem; color: #6c757d;">Versión</p>
-                <code style="font-size: 1rem; color: #0451E4; font-weight: 600;">v1.1.2</code>
-                <p style="margin: 5px 0 0 0; font-size: 0.75rem; color: #adb5bd;">Build 2026.02.03</p>
-            </div>
-            """, unsafe_allow_html=True)
-    
-        # Upload de archivo ZIP
-        _, uploaded_file = render_file_upload()
+        # ── Unified project source (sidebar) ─────────────────────────
+        from shared.loader import get_project
+        project = get_project()
 
-        # Determinar qué opción usar
         file_to_analyze = None
         temp_file_path = None
 
-        if uploaded_file is not None:
-            # Archivo ZIP subido
-            temp_file_path = os.path.join(os.getcwd(), uploaded_file.name)
-            with open(temp_file_path, 'wb') as f:
-                f.write(uploaded_file.getbuffer())
-            file_to_analyze = temp_file_path
+        if project is not None:
+            file_to_analyze = project.report_path
+        else:
+            st.warning(
+                "⚠️ **Sin proyecto cargado.** "
+                "Cargá un archivo PBIP desde el sidebar para analizar sus medidas DAX."
+            )
+            st.stop()
     
         if file_to_analyze:
             try:

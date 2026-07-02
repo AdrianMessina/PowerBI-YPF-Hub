@@ -25,19 +25,19 @@ def _inject_css_once():
         margin: 1rem 0 1.5rem;
     }
     .module-showcase h3 {
-        font-family: 'Fira Sans', sans-serif;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #E8ECF4;
-        margin: 0 0 0.4rem 0;
-        letter-spacing: -0.02em;
+        font-family: 'Fira Sans', sans-serif !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        color: #E8ECF4 !important;
+        margin: 0 0 0.4rem 0 !important;
+        letter-spacing: -0.02em !important;
     }
     .module-showcase p.showcase-desc {
-        font-family: 'Fira Sans', sans-serif;
-        font-size: 0.9rem;
-        color: #94A3B8;
-        line-height: 1.6;
-        margin: 0 0 1rem 0;
+        font-family: 'Fira Sans', sans-serif !important;
+        font-size: 0.9rem !important;
+        color: #CBD5E1 !important;
+        line-height: 1.6 !important;
+        margin: 0 0 1rem 0 !important;
     }
     .showcase-grid {
         display: grid;
@@ -77,10 +77,10 @@ def _inject_css_once():
     }
     .showcase-text {
         display: inline-block;
-        font-family: 'Fira Sans', sans-serif;
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: #E8ECF4;
+        font-family: 'Fira Sans', sans-serif !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        color: #F1F5F9 !important;
         vertical-align: middle;
     }
     @keyframes showcaseFadeIn {

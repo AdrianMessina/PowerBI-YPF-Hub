@@ -10,6 +10,7 @@ from shared.loader import require_project
 from ui.tab_overview import render_overview_tab
 from ui.tab_metrics import render_metrics_tab
 from ui.tab_recommendations import render_recommendations_tab
+from ui.tab_storage_mode import render_storage_mode_tab
 from ui.tab_export import render_export_tab
 from ui.components import render_summary_metrics
 from apps_core.layout_core.module_showcase import render_module_showcase
@@ -39,8 +40,8 @@ def render(logger):
             ("📊", "Score global 0-100"),
             ("🗂️", "Métricas de reporte"),
             ("🧮", "Métricas del modelo"),
+            ("🔗", "Storage Mode + DirectQuery"),
             ("⚠️", "Recomendaciones priorizadas"),
-            ("🎯", "Detección de anti-patterns"),
             ("📤", "Export CSV / JSON"),
         ],
     )
@@ -53,16 +54,29 @@ def render(logger):
     # Summary metrics at top
     render_summary_metrics(project)
 
-    # Sub-tabs (from Fixer's tab_overview, tab_metrics, tab_recommendations)
-    tabs = st.tabs(["Overview", "Métricas", "Recomendaciones", "Exportar"])
+    # Sub-tabs
+    # Badge dinámico en el tab Storage Mode si hay issues críticos
+    dq_critical = sum(
+        1 for i in (getattr(project, "directquery_issues", []) or [])
+        if i.get("severity") == "critical"
+    )
+    storage_tab_label = "🔗 Storage Mode"
+    if dq_critical > 0:
+        storage_tab_label = f"🔗 Storage Mode ({dq_critical}⚠)"
+
+    tabs = st.tabs([
+        "Overview", "Métricas", storage_tab_label, "Recomendaciones", "Exportar",
+    ])
 
     with tabs[0]:
         render_overview_tab(project)
     with tabs[1]:
         render_metrics_tab(project)
     with tabs[2]:
-        render_recommendations_tab(project)
+        render_storage_mode_tab(project)
     with tabs[3]:
+        render_recommendations_tab(project)
+    with tabs[4]:
         render_export_tab(project)
 
     try:

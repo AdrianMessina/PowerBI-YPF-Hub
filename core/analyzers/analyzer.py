@@ -10,6 +10,7 @@ from core.models import (
     PageDetail, Recommendation, RelationshipDetail, ScoreCategory, Severity,
     VisualDetail,
 )
+from core.analyzers.storage_mode import analyze_storage
 from core.parsers.pbip_parser import PBIPParser
 from core.parsers.pbix_parser import PBIXParser
 
@@ -447,6 +448,18 @@ class PowerBIAnalyzer:
         result.auto_date_time_enabled = auto_dt_count > 0
         result.auto_date_time_tables_count = auto_dt_count
 
+        # ── Storage mode analysis (Import/DirectQuery/Dual + validaciones) ──
+        try:
+            storage = analyze_storage(all_tables)
+            result.tables_by_mode = storage["tables_by_mode"]
+            result.storage_mode_type = storage["storage_mode_type"]
+            result.directquery_tables_detail = storage["directquery_tables_detail"]
+            result.directquery_issues = storage["directquery_issues"]
+            result.query_folding_warnings = storage["query_folding_warnings"]
+        except Exception:
+            # No dejar que un fallo acá tire el análisis entero
+            pass
+
     def _is_complex_measure(self, expression: str) -> bool:
         """A measure is 'complex' if it uses VAR, CALCULATE with filters, or nested functions."""
         if not expression:
@@ -570,6 +583,45 @@ class PowerBIAnalyzer:
                 severity=Severity.WARNING,
                 message="Auto Date/Time está habilitado. Genera tablas ocultas que aumentan el tamaño del modelo.",
                 current_value="Habilitado", target_value="Deshabilitado",
+            ))
+
+        # ── DirectQuery issues (crítico) ────────────────────────────
+        dq_critical = [i for i in result.directquery_issues if i.get("severity") == "critical"]
+        if dq_critical:
+            recs.append(Recommendation(
+                metric="directquery_errors",
+                severity=Severity.CRITICAL,
+                message=(
+                    f"{len(dq_critical)} error(es) crítico(s) en tablas DirectQuery — "
+                    "columnas/tablas calculadas que rompen el modelo. Ver sección "
+                    "'Storage Mode' del análisis para el detalle."
+                ),
+                current_value=len(dq_critical), target_value=0,
+            ))
+
+        dq_warnings = [i for i in result.directquery_issues if i.get("severity") == "warning"]
+        if dq_warnings:
+            recs.append(Recommendation(
+                metric="directquery_warnings",
+                severity=Severity.WARNING,
+                message=(
+                    f"{len(dq_warnings)} función(es) DAX con soporte limitado en DirectQuery. "
+                    "Verificá compatibilidad con tu fuente."
+                ),
+                current_value=len(dq_warnings), target_value=0,
+            ))
+
+        # ── Query folding anti-patterns (crítico para DirectQuery) ──
+        if result.query_folding_warnings:
+            recs.append(Recommendation(
+                metric="query_folding",
+                severity=Severity.WARNING,
+                message=(
+                    f"{len(result.query_folding_warnings)} anti-pattern(s) en M code "
+                    "que rompen query folding. En DirectQuery esto es crítico: obliga "
+                    "a materializar toda la tabla en memoria."
+                ),
+                current_value=len(result.query_folding_warnings), target_value=0,
             ))
 
         # Excessive slicers

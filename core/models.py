@@ -179,6 +179,13 @@ class AnalysisResult:
     # Desglose de tablas por tipo
     tables_by_type: dict = field(default_factory=dict)
 
+    # ── Storage mode (Import / DirectQuery / Dual) ───────────────
+    tables_by_mode: dict = field(default_factory=dict)          # {"import": 12, "directQuery": 3, "dual": 1}
+    storage_mode_type: str = "import"                            # "import" | "directQuery" | "dual" | "composite"
+    directquery_tables_detail: list = field(default_factory=list)   # [{"name","mode","source_snippet"}]
+    directquery_issues: list = field(default_factory=list)      # [{"severity","table","issue","detail"}]
+    query_folding_warnings: list = field(default_factory=list)  # [{"table","antipattern","snippet"}]
+
     # Design metrics
     slicers_count: int = 0
     buttons_count: int = 0

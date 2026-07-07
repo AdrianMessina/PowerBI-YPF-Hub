@@ -176,15 +176,60 @@ class TMDLParser:
                 measure["displayFolder"] = df.group(1).strip()
             table["measures"].append(measure)
 
-        # Check for calculated table
-        # En TMDL real, una tabla calculada se declara así:
-        #   partition 'NombreTabla-GUID' = calculated
-        #       mode: import (opcional)
-        #       source = GROUPBY(...) o cualquier expresión DAX
-        # NO confundir con: partition X = m (Power Query) o partition X = entityRef
-        if re.search(r"^\tpartition\s+(?:'[^']+'|\"[^\"]+\"|\S+)\s*=\s*calculated\b",
-                     content, re.MULTILINE):
+        # ── Parse partitions con detalle (mode + source + kind) ──────────
+        # Sintaxis TMDL:
+        #   partition <name> = <kind>
+        #       mode: <mode>
+        #       source = <expr>
+        # kind ∈ {calculated, m, entityRef}
+        # mode ∈ {import, directQuery, dual}   (default = import si no aparece)
+        partition_blocks = re.split(
+            r"(?=^\tpartition\s+)", content, flags=re.MULTILINE
+        )
+        for pblock in partition_blocks:
+            pm = re.match(
+                r"^\tpartition\s+(?:'([^']+)'|\"([^\"]+)\"|(\S+))\s*=\s*(\w+)",
+                pblock,
+            )
+            if not pm:
+                continue
+            pname = pm.group(1) or pm.group(2) or pm.group(3) or ""
+            pkind = pm.group(4).strip().lower()
+
+            # mode
+            mm_mode = re.search(r"^\s+mode:\s*(\w+)", pblock, re.MULTILINE)
+            pmode = mm_mode.group(1).strip().lower() if mm_mode else "import"
+
+            # source = ...  (capturar hasta próximo bloque hermano o EOF)
+            src_match = re.search(
+                r"^\s+source\s*=\s*(.*?)(?=^\t\w|^\tannotation\s|\Z)",
+                pblock,
+                re.MULTILINE | re.DOTALL,
+            )
+            psource = src_match.group(1).strip() if src_match else ""
+
+            table["partitions"].append({
+                "name": pname,
+                "kind": pkind,          # calculated | m | entityRef
+                "mode": pmode,          # import | directQuery | dual
+                "source": psource,
+            })
+
+        # Check for calculated table (mantener compatibilidad con lógica previa)
+        if any(p["kind"] == "calculated" for p in table["partitions"]):
             table["isCalculatedTable"] = True
+
+        # ── Storage mode a nivel tabla ────────────────────────────────
+        # Si hay múltiples partitions con distintos modes, tabla es "dual/mixed"
+        # Si no hay partitions (raro), default a "import"
+        if table["partitions"]:
+            modes = {p["mode"] for p in table["partitions"]}
+            if len(modes) == 1:
+                table["mode"] = modes.pop()
+            else:
+                table["mode"] = "dual"
+        else:
+            table["mode"] = "import"
 
         # ── Asignación FINAL del tableType (después de detectar calculated) ──
         # Prioridad: Auto Date/Time > system_hidden > calculated > user
